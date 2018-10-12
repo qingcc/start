@@ -1,0 +1,77 @@
+{{define "content"}}
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 管理员管理 <span class="c-gray en">&gt;</span> 权限管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div class="text-c">
+        <form class="Huiform" method="post" action="" target="_self">
+            <input type="text" class="input-text" style="width:250px" placeholder="权限名称" id="" name="">
+            <button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜权限节点</button>
+        </form>
+    </div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="layer_show('添加权限节点','/admin/navigation/add','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加权限节点</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+    <table class="table table-border table-bordered table-bg">
+        <thead>
+        <tr class="text-c">
+            <th width="25"><input type="checkbox" name="" value=""></th>
+            <th width="200">标题</th>
+            <th>路由</th>
+            <th>是否显示</th>
+            <th>是否系统默认</th>
+            <th width="100">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{ range $key,$val:=.datalist }}
+        <tr class="text-c">
+            <td><input type="checkbox" value="{{ $val.Id }}" name="id[]"></td>
+            <td>{{ $val.Title }}</td>
+            <td>233</td>
+            <td>{{ $val.IsShow }}</td>
+            <td>{{ $val.IsSys }}</td>
+            <td class="td-manage">
+                <a title="编辑" href="javascript:;" onclick="layer_show('管理员编辑','/admin/admin_user/edit?id={{ $val.Id}}','800','550')" class="ml-5" style="text-decoration:none">
+                    <i class="Hui-iconfont">&#xe6df;</i>
+                </a>
+                <a title="删除" href="javascript:;" onclick="single_del(this,{{ $val.Id }},'/admin/admin_user/del')" class="ml-5" style="text-decoration:none">
+                    <i class="Hui-iconfont">&#xe6e2;</i>
+                </a>
+            </td>
+        </tr>
+        {{ end }}
+        </tbody>
+    </table>
+</div>
+{{end}}
+{{define "js"}}
+<script type="text/javascript" src="/public/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        debugger
+        $('.table-sort').dataTable({
+            "aaSorting": [[ 1, "desc" ]],//默认第几个排序
+            "bStateSave": true,//状态保存
+            "searching": true,
+            "pading":false,
+            "aoColumnDefs": [
+                //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+                {"orderable":false,"aTargets":[0,8]}// 不参与排序的列
+            ],
+            // "columns": [
+            //     {"data": "id"},
+            //     {"data": "title"},
+            //     {"data": "route_action"},
+            //     {"data": "is_show"},
+            //     {"data": "is_sys"},
+            //     {
+            //         "data": "created_at",
+            //         "render": function () {
+            //
+            //         }
+            //     },
+            // ]
+        });
+        /*管理员-权限-添加*/
+        function admin_permission_add(title,url,w,h){
+            layer_show(title,url,w,h);
+        }
+
+    </script>
+{{end}}
